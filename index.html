@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWise - Personal Finance Tracker</title>
+</head>
+<body>
+    <h1>Welcome to SpendWise</h1>
+    <p>Track your money. Build better financial habits.</p>
+
+    <h2>My Balance</h2>
+    <p id="balance">KSh 0</p>
+
+    <h2>Add a Transaction</h2>
+
+    <form id="transaction-form">
+        <label for="description">Description:</label>
+        <input type="text" id="description" required>
+
+        <br><br>
+
+        <label for="amount">Amount (KSh):</label>
+        <input type="number" id="amount" min="1" required>
+
+        <br><br>
+
+        <label for="type">Transaction type:</label>
+        <select id="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Add Transaction</button>
+    </form>
+
+    <h2>My Transactions</h2>
+    <ul id="transactions"></ul>
+
+    <script>
+        let balance = 0;
+
+        const form = document.getElementById("transaction-form");
+        const balanceDisplay = document.getElementById("balance");
+        const transactionList = document.getElementById("transactions");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const description = document.getElementById("description").value;
+            const amount = Number(document.getElementById("amount").value);
+            const type = document.getElementById("type").value;
+
+            if (type === "income") {
+                balance += amount;
+            } else {
+                balance -= amount;
+            }
+
+            balanceDisplay.textContent = "KSh " + balance.toLocaleString();
+
+            const item = document.createElement("li");
+            item.textContent = description + " - " + type + ": KSh " + amount.toLocaleString();
+
+            transactionList.appendChild(item);
+
+            form.reset();
+        });
+    </script>
+</body>
+</html>
